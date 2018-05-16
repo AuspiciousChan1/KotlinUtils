@@ -10,22 +10,6 @@ interface Command{
     fun execute(node: TreeNode)
 }
 
-fun bfs(root:TreeNode, command: Command){
-    val queue: Queue<TreeNode> = LinkedList()
-    var peek: TreeNode
-    queue.add(root)
-    while (!queue.isEmpty()){
-        peek = queue.poll()
-        command.execute(peek)
-        if(peek.left != null){
-            queue.add(peek.left)
-        }
-        if(peek.right != null){
-            queue.add(peek.right)
-        }
-    }
-}
-
 //return null when failed to create a tree
 fun createTree(str:String, seperator: String):TreeNode?{
     if(str.isEmpty()){
@@ -78,4 +62,39 @@ fun createTree(str:String, seperator: String):TreeNode?{
     }
 
 
+}
+
+//brand first serach
+fun bfs(root:TreeNode, command: Command){
+    val queue: Queue<TreeNode> = LinkedList()
+    var peek: TreeNode
+    queue.add(root)
+    while (!queue.isEmpty()){
+        peek = queue.poll()
+        command.execute(peek)
+        if(peek.left != null){
+            queue.add(peek.left)
+        }
+        if(peek.right != null){
+            queue.add(peek.right)
+        }
+    }
+}
+
+//preoder search
+fun blr(root: TreeNode, command: Command){
+    val stack = Stack<TreeNode>()
+    var peek: TreeNode
+    stack.add(root)
+
+    while (stack.isNotEmpty()){
+        peek = stack.pop()
+        command.execute(peek)
+        if(peek.right != null){
+            stack.push(peek.right)
+        }
+        if(peek.left != null){
+            stack.push(peek.left)
+        }
+    }
 }
